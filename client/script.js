@@ -4,6 +4,8 @@ import user from './assets/user.svg'
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
 
+const url = import.meta.env.VITE_URL_SERVER
+
 let loadInterval
 
 function loader(element) {
@@ -17,7 +19,7 @@ function loader(element) {
         if (element.textContent === '....') {
             element.textContent = '';
         }
-    }, 300);
+    }, 200);
 }
 
 function typeText(element, text) {
@@ -86,7 +88,7 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    const response = await fetch('https://askme-j84d.onrender.com/', {
+    const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -111,6 +113,12 @@ const handleSubmit = async (e) => {
         alert(err)
     }
 }
+
+// bot's chatstripe
+const uniqueId = generateUniqueId()
+chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
+const messageDiv = document.getElementById(uniqueId)
+typeText(messageDiv, "Hello! How can i help you today?")
 
 form.addEventListener('submit', handleSubmit)
 form.addEventListener('keyup', (e) => {
