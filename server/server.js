@@ -2,6 +2,8 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
+import path from "path";
+
 
 dotenv.config()
 
@@ -14,11 +16,19 @@ const openai = new OpenAIApi(configuration);
 const app = express()
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(path.resolve(), "api")))
 
 app.get('/', async (_req, res) => {
   res.status(200).send({
-    message: 'Hello from CodeX!'
+    message: 'Hello Darkness my old friend!'
   })
+})
+
+app.get("/api", async (_req, res) => {
+  const data = path.join(path.resolve(), "api", "/home24h.json");
+  res.header("Content-Type", "application/json");
+  res.sendFile(data);
 })
 
 app.post('/', async (req, res) => {

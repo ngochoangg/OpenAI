@@ -1,0 +1,1432 @@
+{
+  "components": {
+    "schemas": {
+      "Post": {
+        "properties": {
+          "daBan": {
+            "default": false,
+            "description": "`True`||`true` nếu đã bán, và `False`||`false` nếu chưa bán.",
+            "type": "boolean"
+          },
+          "dienTich": {
+            "description": "Diện tích tính bằng m<sup>2</sup>",
+            "example": 100,
+            "type": "number"
+          },
+          "duAn": {
+            "description": "Thuộc dự án nhà ở hoặc công trình nào.",
+            "type": "string"
+          },
+          "giaTien": {
+            "description": "Giá tiền muốn bán/ cho thuê.",
+            "type": "number"
+          },
+          "hinhThuc": {
+            "description": "Hình thức bán hoặc cho thuê",
+            "example": "sell",
+            "type": "string"
+          },
+          "linkAnh": {
+            "description": "Đường dẫn tới ảnh vd <a>https://i.imgur.com/qitoR7V.jpeg</a>",
+            "example": "https://i.imgur.com/qitoR7V.jpeg",
+            "format": "url",
+            "type": "string"
+          },
+          "loaiNhaDat": {
+            "description": "Loại nhà hay đất muốn đăng tin",
+            "example": "Nhà ở",
+            "type": "string"
+          },
+          "quanHuyen": {
+            "description": "Chi tiết bên phần `Address` cách gọi quận huyện của tình thành.",
+            "example": 8,
+            "type": "integer"
+          },
+          "soNha": {
+            "description": "địa chỉ chi tiết",
+            "example": "số 1 hồ Thiền Quang",
+            "type": "string"
+          },
+          "soPhong": {
+            "description": "Số lượng phòng trong căn nhà.",
+            "type": "integer"
+          },
+          "soTang": {
+            "description": "Số lượng tầng/lầu.",
+            "type": "integer"
+          },
+          "tinhThanh": {
+            "description": "Chữ cái đầu tiên, viết hoa của tình thành",
+            "example": "SG",
+            "type": "string"
+          }
+        },
+        "required": [
+          "daBan",
+          "dienTich",
+          "giaTien",
+          "hinhThuc",
+          "linkAnh",
+          "loaiNhaDat",
+          "quanHuyen",
+          "soNha",
+          "soPhong",
+          "soTang",
+          "tinhThanh"
+        ],
+        "type": "object"
+      },
+      "post_body": {
+        "properties": {
+          "dienTich": {
+            "description": "Diện tích tính bằng m<sup>2</sup>",
+            "example": 100,
+            "type": "number"
+          },
+          "duAn": {
+            "description": "Thuộc dự án nhà ở hoặc công trình nào.",
+            "type": "string"
+          },
+          "giaTien": {
+            "description": "Giá tiền muốn bán/ cho thuê.",
+            "type": "number"
+          },
+          "hinhThuc": {
+            "description": "Hình thức bán hoặc cho thuê",
+            "example": "sell",
+            "type": "string"
+          },
+          "linkAnh": {
+            "description": "Đường dẫn tới ảnh vd <a>https://i.imgur.com/qitoR7V.jpeg</a>",
+            "example": "https://i.imgur.com/qitoR7V.jpeg",
+            "type": "string"
+          },
+          "loaiNhaDat": {
+            "description": "Loại nhà hay đất muốn đăng tin",
+            "example": "Nhà ở",
+            "type": "string"
+          },
+          "quanHuyen": {
+            "description": "Chi tiết bên phần `Address` cách gọi quận huyện của tình thành.",
+            "example": 8,
+            "type": "integer"
+          },
+          "soNha": {
+            "description": "địa chỉ chi tiết",
+            "example": "số 1 hồ Thiền Quang",
+            "type": "string"
+          },
+          "soPhong": {
+            "description": "Số lượng phòng trong căn nhà.",
+            "type": "integer"
+          },
+          "soTang": {
+            "description": "Số lượng tầng/lầu.",
+            "type": "integer"
+          },
+          "tinhThanh": {
+            "description": "Chữ cái đầu tiên, viết hoa của tình thành",
+            "example": "SG",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dienTich",
+          "giaTien",
+          "hinhThuc",
+          "linkAnh",
+          "loaiNhaDat",
+          "quanHuyen",
+          "soNha",
+          "soPhong",
+          "soTang",
+          "tinhThanh"
+        ],
+        "type": "object"
+      },
+      "Role": {
+        "properties": {
+          "permission": {
+            "items": {
+              "description": "This one only accept 4 permission: `CREATE`, `READ`, `UPDATE`, `DELETE`. `DELETE` permission shouldn't granted to anyone else except `Admin` already granted by default for `security` reason",
+              "oneOf": [
+                {
+                  "example": "READ",
+                  "type": "string"
+                },
+                {
+                  "example": "OTHER_PERMISSION",
+                  "type": "string"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          "roleKey": {
+            "example": "ROLE_SOMETHING",
+            "type": "string"
+          },
+          "roleName": {
+            "example": "This role accept user can read data",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "User": {
+        "properties": {
+          "diaChi": {
+            "description": "Your address",
+            "example": "Ho Chi Minh city",
+            "type": "string"
+          },
+          "email": {
+            "example": "youremail@example.com",
+            "format": "email",
+            "type": "string"
+          },
+          "hoTen": {
+            "description": "Your full name",
+            "type": "string"
+          },
+          "password": {
+            "description": "Password not return a `raw` format, it will `encrypted` before return",
+            "format": "password",
+            "type": "string"
+          },
+          "soDienThoai": {
+            "description": "Phone code accepted like `+84 xxx` or `+1 xxx`, etc",
+            "example": "0345234567",
+            "type": "string"
+          },
+          "username": {
+            "description": "Must be `unique`",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "Token": {
+        "in": "header",
+        "name": "Authorization",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "email": "vingochoang94@gmail.com"
+    },
+    "description": "API của Hoàng, thuộc dự án bất động sản `home24h`.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "title": "Home 24h API",
+    "version": "1.0.1"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "rootGET",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "Trả về ngày tháng năm theo giờ của DATABASE.",
+        "x-swagger-router-controller": "Default"
+      }
+    },
+    "/{username}/post/{id}": {
+      "get": {
+        "operationId": "usernamePostIdGET",
+        "parameters": [
+          {
+            "description": "`Tên người dùng` đã đăng ký",
+            "explode": false,
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "`ID` của bài đăng",
+            "explode": false,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Some value unacceptable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Lấy bài đăng của người dùng theo ID.",
+        "tags": [
+          "Tin đăng",
+          "Auth",
+          "Users"
+        ],
+        "x-swagger-router-controller": "TinNg"
+      },
+      "put": {
+        "operationId": "usernamePostIdPUT",
+        "parameters": [
+          {
+            "description": "`Tên người dùng` đã đăng ký",
+            "explode": false,
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "`ID` của bài đăng",
+            "explode": false,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Cập nhật bài đăng của người dùng theo ID.",
+        "tags": [
+          "Tin đăng",
+          "Auth",
+          "Users"
+        ],
+        "x-swagger-router-controller": "TinNg"
+      }
+    },
+    "/{username}/posts": {
+      "get": {
+        "operationId": "usernamePostsGET",
+        "parameters": [
+          {
+            "description": "Tên người dùng `đã đăng ký`",
+            "explode": false,
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Lấy danh sách bài đã đăng của người dùng",
+        "tags": [
+          "Tin đăng",
+          "Auth",
+          "Users"
+        ],
+        "x-swagger-router-controller": "TinNg"
+      }
+    },
+    "/aposts": {
+      "get": {
+        "operationId": "apostsGET",
+        "parameters": [
+          {
+            "description": "Page *:* `Trang cần gọi đến`",
+            "explode": true,
+            "in": "query",
+            "name": "p",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "form"
+          },
+          {
+            "description": "Size *:* `Số lượng bài đăng muốn lấy trên một trang`",
+            "explode": true,
+            "in": "query",
+            "name": "s",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Trả về danh sách bài đăng đầy đủ.",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/district": {
+      "get": {
+        "operationId": "districtGET",
+        "parameters": [
+          {
+            "description": "Page | Trang cần gọi đến.",
+            "explode": true,
+            "in": "query",
+            "name": "p",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "form"
+          },
+          {
+            "description": "Size | Số lượng tỉnh thành muốn gọi.",
+            "explode": true,
+            "in": "query",
+            "name": "s",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Lấy danh sách quận/huyện theo số lượng",
+        "tags": [
+          "Address",
+          "default"
+        ],
+        "x-swagger-router-controller": "Address"
+      }
+    },
+    "/district/{id}": {
+      "get": {
+        "operationId": "districtIdGET",
+        "parameters": [
+          {
+            "explode": false,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Lấy tỉnh thành theo ID",
+        "tags": [
+          "Address",
+          "default"
+        ],
+        "x-swagger-router-controller": "Address"
+      }
+    },
+    "/district/{id}/w": {
+      "get": {
+        "operationId": "districtIdWGET",
+        "parameters": [
+          {
+            "explode": false,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Lấy toàn bộ phường/ xã theo id của quận/huyện",
+        "tags": [
+          "Address",
+          "default"
+        ],
+        "x-swagger-router-controller": "Address"
+      }
+    },
+    "/login": {
+      "post": {
+        "operationId": "loginPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "password": "yourpassword",
+                "username": "username"
+              },
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "summary": "Đăng nhập trả về chuỗi token",
+        "tags": [
+          "Users",
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Users"
+      }
+    },
+    "/post": {
+      "post": {
+        "operationId": "postPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "dienTich": 200,
+                "duAn": "None",
+                "giaTien": 5000000,
+                "hinhThuc": "sell",
+                "linkAnh": "https://i.imgur.com/qitoR7V.jpeg",
+                "loaiNhaDat": "Nhà ở",
+                "quanHuyen": 8,
+                "soNha": "1 đường cách mạng tháng 8",
+                "soPhong": 5,
+                "soTang": 3,
+                "tinhThanh": "SG"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/post_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Tạo mới một bài đăng",
+        "tags": [
+          "Tin đăng",
+          "Auth",
+          "Users"
+        ],
+        "x-swagger-router-controller": "TinNg"
+      }
+    },
+    "/post/{id}": {
+      "delete": {
+        "operationId": "postIdDELETE",
+        "parameters": [
+          {
+            "description": "ID of Post",
+            "explode": false,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "No content"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Xóa bài đăng theo ID, thao tác chỉ Admin.",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      },
+      "get": {
+        "operationId": "postIdGET",
+        "parameters": [
+          {
+            "description": "Post ID",
+            "explode": false,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Lấy bài post theo ID",
+        "tags": [
+          "Dev",
+          "Auth"
+        ],
+        "x-swagger-router-controller": "Dev"
+      },
+      "put": {
+        "operationId": "postIdPUT",
+        "parameters": [
+          {
+            "description": "ID of post",
+            "explode": false,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK / updated"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Cập nhật bài đăng theo ID, chỉ dành cho Admin/Manager",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/post/lts": {
+      "get": {
+        "operationId": "postLtsGET",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "lấy 6 bài đăng mới nhất",
+        "tags": [
+          "Tin đăng",
+          "default"
+        ],
+        "x-swagger-router-controller": "TinNg"
+      }
+    },
+    "/posts": {
+      "get": {
+        "operationId": "postsGET",
+        "parameters": [
+          {
+            "description": "Page *:* `Trang cần gọi đến`",
+            "explode": true,
+            "in": "query",
+            "name": "p",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "form"
+          },
+          {
+            "description": "Size *:* `Số lượng bài đăng muốn lấy trên một trang`",
+            "explode": true,
+            "in": "query",
+            "name": "s",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden *:* Chưa đăng nhập"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Lấy danh sách bài đăng của người dùng đã được duyệt và chưa bán.",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/province": {
+      "get": {
+        "operationId": "provinceGET",
+        "parameters": [
+          {
+            "description": "Page | Trang cần gọi đến.",
+            "explode": true,
+            "in": "query",
+            "name": "p",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "form"
+          },
+          {
+            "description": "Size | Số lượng tỉnh thành muốn gọi.",
+            "explode": true,
+            "in": "query",
+            "name": "s",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Lấy danh sách tỉnh/ thành phố theo số lượng",
+        "tags": [
+          "Address",
+          "default"
+        ],
+        "x-swagger-router-controller": "Address"
+      }
+    },
+    "/province/{code}": {
+      "get": {
+        "operationId": "provinceCodeGET",
+        "parameters": [
+          {
+            "description": "Mã tình thành, yêu cầu đúng mới gọi được.",
+            "example": "SG",
+            "explode": false,
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "maxLength": 3,
+              "minLength": 2,
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Lấy tỉnh thành theo mã",
+        "tags": [
+          "Address",
+          "default"
+        ],
+        "x-swagger-router-controller": "Address"
+      }
+    },
+    "/province/{code}/d": {
+      "get": {
+        "operationId": "provinceCodeDGET",
+        "parameters": [
+          {
+            "example": "SG",
+            "explode": false,
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "maxLength": 3,
+              "minLength": 2,
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Lấy toàn bộ quận/ huyện theo mã tỉnh/ thành",
+        "tags": [
+          "Address",
+          "default"
+        ],
+        "x-swagger-router-controller": "Address"
+      }
+    },
+    "/register": {
+      "post": {
+        "operationId": "registerPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Đăng ký người dùng mới.",
+        "tags": [
+          "default",
+          "Users"
+        ],
+        "x-swagger-router-controller": "Default"
+      }
+    },
+    "/role": {
+      "get": {
+        "description": "",
+        "operationId": "roleGET",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Trả về toàn bộ quyền có thể cấp, chỉ `Admin`",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      },
+      "post": {
+        "description": "",
+        "operationId": "rolePOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Tạo mới quyền, chỉ `Admin`",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/role/{roleID}": {
+      "delete": {
+        "description": "Xóa `ROLE` theo id, chỉ `Admin`",
+        "operationId": "roleRoleIDDELETE",
+        "parameters": [
+          {
+            "explode": false,
+            "in": "path",
+            "name": "roleID",
+            "required": true,
+            "schema": {
+              "example": 3,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Xóa một role theo ID",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/role/{roleKey}": {
+      "put": {
+        "description": "Chỉnh sửa `ROLE` theo `roleKey`, chỉ `Admin`",
+        "operationId": "roleRoleKeyPUT",
+        "parameters": [
+          {
+            "explode": false,
+            "in": "path",
+            "name": "roleKey",
+            "required": true,
+            "schema": {
+              "description": "Cấp quyền `Role` cho người dùng",
+              "example": "ROLE_SOMETHING",
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Chỉnh sửa ROLE theo tên ROLE đó",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/roles": {
+      "get": {
+        "description": "Trả về `Roles`, `Permission` của người dùng. Chỉ `Admin` hoặc `Manager` ",
+        "operationId": "rolesGET",
+        "parameters": [
+          {
+            "explode": true,
+            "in": "query",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Kiểm tra quyền được cấp của người dùng đã đăng ký.",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/user": {
+      "get": {
+        "description": "List of `user` already registered, only `Admin`",
+        "operationId": "userGET",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Lấy danh sách toàn bộ người dùng đã đăng ký",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/user/{username}": {
+      "delete": {
+        "operationId": "userUsernameDELETE",
+        "parameters": [
+          {
+            "explode": false,
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "example": "hoangvn",
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Xóa người dùng theo username",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      },
+      "put": {
+        "operationId": "userUsernamePUT",
+        "parameters": [
+          {
+            "explode": false,
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "example": "hoangvn",
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    },
+    "/ward": {
+      "get": {
+        "operationId": "wardGET",
+        "parameters": [
+          {
+            "description": "Page...",
+            "explode": true,
+            "in": "query",
+            "name": "p",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "form"
+          },
+          {
+            "description": "Size...",
+            "explode": true,
+            "in": "query",
+            "name": "s",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Lấy danh sách phường/ xã theo số lượng",
+        "tags": [
+          "Address",
+          "default"
+        ],
+        "x-swagger-router-controller": "Address"
+      }
+    },
+    "/ward/{id}": {
+      "get": {
+        "operationId": "wardIdGET",
+        "parameters": [
+          {
+            "explode": false,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "summary": "Lấy phường/ xã theo ID",
+        "tags": [
+          "Address",
+          "default"
+        ],
+        "x-swagger-router-controller": "Address"
+      }
+    },
+    "/who": {
+      "post": {
+        "description": "Kết quả trả về là tên người dùng theo token đó.",
+        "operationId": "whoPOST",
+        "requestBody": {
+          "content": {
+            "text/plain; charset=utf-8": {
+              "schema": {
+                "description": "Chuỗi `Token` được trả về lúc đăng nhập",
+                "example": "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzMxODk2MDYsInVzZXIiOnsidXNlcklkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmEkMTAkcnEyblpUeVEua293SWM5RWZrWHZ5dXljU2k5SHpFSTNQUFRqMkJSMTBWaS9aS1BibDVXWHUiLCJhdXRob3JpdGllcyI6WyJSRUFEIiwyREVMRVRFIiwiQ1JFQVRFIiwiUk9MRV9BRE1JTiIsIlVQREFURSJdfX0.drb4yiEB6bpwrr1ARgNg_yVv1k63LqWbv0a7QrQ7_Kc",
+                "format": "token",
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "Unprocessable"
+          }
+        },
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "summary": "Kiểm tra chuỗi token",
+        "tags": [
+          "Dev"
+        ],
+        "x-swagger-router-controller": "Dev"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://question-env.eba-es2s4tgm.ap-southeast-1.elasticbeanstalk.com"
+    }
+  ],
+  "tags": [
+    {
+      "description": "Những request liên quan đến tin bài đăng, yêu cầu đăng nhập sẽ có tag `Auth`",
+      "name": "Tin đăng"
+    },
+    {
+      "description": "Yêu cầu Token( headers) khi truy cập.",
+      "name": "Auth"
+    },
+    {
+      "description": "Những request với tag này dành cho người có quyền Admin",
+      "name": "Dev"
+    },
+    {
+      "description": "Request dành cho những người dùng đã đăng ký có thể thao tác.",
+      "name": "Users"
+    },
+    {
+      "description": "Thao tác với địa chỉ, thành thị, phường xã, quận huyện.",
+      "name": "Address"
+    },
+    {
+      "description": "Thao tác không cần đăng nhập",
+      "name": "default"
+    }
+  ]
+}
