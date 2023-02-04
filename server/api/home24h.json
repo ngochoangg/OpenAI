@@ -1400,7 +1400,7 @@
   },
   "servers": [
     {
-      "url": "https://hoangvn.azurewebsites.net"
+      "url": "https://hom24h.up.railway.app/api"
     }
   ],
   "tags": [
